@@ -23,6 +23,7 @@
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^7.1.0",
+    "vue2-ace-editor": "^0.0.13",
     "vuexblaze": "^0.1.1",
     "vuexfire": "^3.0.0-alpha.10"
   },
