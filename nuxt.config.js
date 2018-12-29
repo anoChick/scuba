@@ -42,7 +42,28 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    ['nuxt-fire', {
+      useOnly: ['firestore'],
+      config: {
+        development: {
+          apiKey: process.env.FIRE_API_KEY,
+          databaseURL: process.env.FIRE_DATABASE_URL,
+          projectId: process.env.FIRE_PROJECT_ID,
+          authDomain: '',
+          storageBucket: '',
+          messagingSenderId: ''
+        },
+        production: {
+          apiKey: process.env.FIRE_API_KEY,
+          databaseURL: process.env.FIRE_DATABASE_URL,
+          projectId: process.env.FIRE_PROJECT_ID,
+          authDomain: '',
+          storageBucket: '',
+          messagingSenderId: ''
+        }
+      }
+    }]
   ],
 
   /*
