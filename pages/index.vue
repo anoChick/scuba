@@ -1,6 +1,5 @@
 <template lang='pug'>
-section.container
-
+div#indexContainer
 </template>
 <script>
 </script>
