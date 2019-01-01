@@ -1,10 +1,14 @@
 <template lang='pug'>
-section.container
+.container
   #editContainer(v-if="webhook")
     #editInfoContainer
       el-form
         el-form-item
-          el-input(v-model="webhook.title" placeholder="タイトル" size='mini')
+          el-col(:span="22")
+            el-input(v-model="webhook.title" placeholder="タイトル" size='mini')
+          el-col(:span="2")
+            el-button.delete-webhook-button(plain type="danger" icon="el-icon-delete" @click="deleteDialogVisible = true" size='mini')
+
         el-form-item
           el-input(type="textarea" v-model="webhook.description" placeholder="詳細" rows='5' size='mini')
     #editCodeContainer
@@ -45,6 +49,16 @@ section.container
         .result
           b 結果
           .result-body {{result}}
+  el-dialog(
+    title="Webhookを削除"
+    :visible.sync="deleteDialogVisible"
+    width="30%"
+    center
+  )
+    span 本当に削除しますか？
+    span.dialog-footer(slot='footer')
+      el-button(@click="deleteDialogVisible = false") キャンセル
+      el-button(type="danger" @click="deleteWebhook()") 削除
 </template>
 <script>
 import { mapState } from 'vuex'
@@ -54,6 +68,7 @@ import IDGenerator from '~/libs/id-generator'
 export default {
   data () {
     return {
+      deleteDialogVisible: false,
       loading: false,
       result: '[未実行]',
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
@@ -71,6 +86,10 @@ export default {
     })
   },
   methods: {
+    deleteWebhook() {
+      this.$store.dispatch('deleteWebhook', this.webhook.id);
+      this.$router.push('/webhooks')
+    },
     removeParam(index) {
       this.webhook.spec.params = this.webhook.spec.params.filter(param => param.id != index)
     },
@@ -116,6 +135,9 @@ export default {
 }
 </script>
 <style lang='sass'>
+#editInfoContainer
+  .delete-webhook-button
+    margin-left: 10px
 #editCodeContainer
   display: flex
   justify-content: space-around
@@ -140,7 +162,7 @@ export default {
       text-align: center
 
     .delete-param-button
-      margin: 0 10px
+      margin-left: 10px
       padding: 6px 10px
   .result
     margin: 16px 0
