@@ -3,5 +3,8 @@ service cloud.firestore {
     match /{document=**} {
       allow read, write: if exists(/databases/$(database)/documents/allowed-users/$(request.auth.token.email));
     }
+    match /forms/{formID=**} {
+      allow read;
+    }
   }
 }
