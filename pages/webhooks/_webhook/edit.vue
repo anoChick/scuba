@@ -43,7 +43,7 @@ section.container
               .param-button
                 el-button(round icon="el-icon-plus" @click="addParam" style="width: 80%;" size='mini') パラメータを追加
         .result
-          b テストリクエスト
+          b 結果
           .result-body {{result}}
 </template>
 <script>
@@ -55,7 +55,7 @@ export default {
   data () {
     return {
       loading: false,
-      result: '結果',
+      result: '[未実行]',
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
     }
   },
