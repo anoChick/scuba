@@ -1,6 +1,6 @@
 <template lang='pug'>
 .container
-  #editContainer(v-if="webhook")
+  #webhookEditContainer(v-if="webhook")
     #editInfoContainer
       el-form
         el-form-item
@@ -49,6 +49,8 @@
         .result
           b 結果
           .result-body {{result}}
+    #editFooter
+      small URL: {{entpointURL()}}
   el-dialog(
     title="Webhookを削除"
     :visible.sync="deleteDialogVisible"
@@ -106,6 +108,10 @@ export default {
     editorInit: function () {
 
     },
+
+    entpointURL() {
+      return this.webhook ? `https://us-central1-anochick-scuba.cloudfunctions.net/webhook/${this.webhook.id}` : ''
+    },
     params() {
       let paramsResult = {}
       this.webhook.spec.params.forEach(param => {
@@ -116,12 +122,13 @@ export default {
     },
     async execWebhook() {
       const method = this.webhook.spec.method
+      const methodName = `$${method.toLowerCase()}`
       await this.update();
       let result = null
       if(method == 'GET' || method == 'DELETE'){
-        result = await this.$axios[`$${this.webhook.spec.method.toLowerCase()}`](`https://us-central1-anochick-scuba.cloudfunctions.net/webhook/${this.webhook.id}`,{params: this.params()})
+        result = await this.$axios[methodName](this.entpointURL(),{params: this.params()})
       }else{
-        result = await this.$axios[`$${this.webhook.spec.method.toLowerCase()}`](`https://us-central1-anochick-scuba.cloudfunctions.net/webhook/${this.webhook.id}`,this.params())
+        result = await this.$axios[methodName](this.entpointURL(),this.params())
       }
 
       this.result = result;
@@ -135,39 +142,40 @@ export default {
 }
 </script>
 <style lang='sass'>
-#editInfoContainer
-  .delete-webhook-button
-    margin-left: 10px
-#editCodeContainer
-  display: flex
-  justify-content: space-around
-  .el-form-item
-    margin-bottom: 8px
-  .box
-    width: 50%
-    flex-grow: 1
-  .editor-box
-    padding-right: 8px
-    margin-right: 8px
-    border-right: 1px solid #ddd
-  .spec
-    .title
-      padding-top: 8px
-      margin: 8px 0
-      display: block
-      border-bottom: 1px solid #ddd
-    .colon
-      text-align: center
-    .param-button
-      text-align: center
-
-    .delete-param-button
+#webhookEditContainer
+  #editInfoContainer
+    .delete-webhook-button
       margin-left: 10px
-      padding: 6px 10px
-  .result
-    margin: 16px 0
-    padding: 16px 0
-    border-top: 1px solid #ddd
-    .result-body
+  #editCodeContainer
+    display: flex
+    justify-content: space-around
+    .el-form-item
+      margin-bottom: 8px
+    .box
+      width: 50%
+      flex-grow: 1
+    .editor-box
+      padding-right: 8px
+      margin-right: 8px
+      border-right: 1px solid #ddd
+    .spec
+      .title
+        padding-top: 8px
+        margin: 8px 0
+        display: block
+        border-bottom: 1px solid #ddd
+      .colon
+        text-align: center
+      .param-button
+        text-align: center
+
+      .delete-param-button
+        margin-left: 10px
+        padding: 6px 10px
+    .result
       margin: 16px 0
+      padding: 16px 0
+      border-top: 1px solid #ddd
+      .result-body
+        margin: 16px 0
 </style>
