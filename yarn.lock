@@ -1121,11 +1121,6 @@
     mustache "^2.3.0"
     stack-trace "0.0.10"
 
-"@posva/vuefire-core@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@posva/vuefire-core/-/vuefire-core-1.0.2.tgz#a9b0bdc755a5365da5d401e4493759a442eb43f2"
-  integrity sha512-cgCklRR/Cg1nOzVFcOibp7w2ng0BYccpBTdKnR46t9oGQvQX6D+Jtd25F3icx2gznOBvcckvtD3HQAkE52r1nA==
-
 "@types/babel-types@*", "@types/babel-types@^7.0.0":
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/@types/babel-types/-/babel-types-7.0.4.tgz#bfd5b0d0d1ba13e351dff65b6e52783b816826c8"
@@ -8665,13 +8660,6 @@ vuexblaze@^0.1.1:
     lodash "^4.17.11"
     pluralize "^7.0.0"
     promise-queue "^2.2.5"
-
-vuexfire@^3.0.0-alpha.10:
-  version "3.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/vuexfire/-/vuexfire-3.0.0-alpha.10.tgz#755281aabc24168d1dbe502541af56136afd81de"
-  integrity sha512-M/4SBfB4HX0q6Y6K9SdONbdxlhp0HNAsX2EMbiyunBuMfDAaQpOTsgwN5jhTNI6KD23d6/bYW75+7MzNKCSjxQ==
-  dependencies:
-    "@posva/vuefire-core" "^1.0.2"
 
 watchpack@^1.5.0:
   version "1.6.0"
