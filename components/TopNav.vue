@@ -5,6 +5,8 @@ el-menu.top-nav(default-active=1 mode="horizontal")
       b Scuba
   el-menu-item(index=2)
     nuxt-link(to='/webhooks') Webhooks
+  el-menu-item(index=3)
+    nuxt-link(to='/forms') Forms
   el-menu-item.user-menu-item(v-if="!currentUser" index=9  @click.native="login") ログイン
   el-submenu.user-menu-item(v-if="currentUser" index=9 )
     template(slot="title")
