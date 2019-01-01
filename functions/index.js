@@ -1,5 +1,7 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
+const request = require('request')
+
 admin.initializeApp()
 const firestore = admin.firestore()
 firestore.settings({
@@ -8,9 +10,9 @@ firestore.settings({
 const webhooksRef = firestore.collection('webhooks')
 
 const cors = require('cors')({ origin: true })
-exports.webhook = functions.https.onRequest((request, response) => {
-  cors(request, response, () => {
-    const webhookID = request._parsedUrl.pathname.slice(1)
+exports.webhook = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    const webhookID = req._parsedUrl.pathname.slice(1)
     webhooksRef
       .doc(webhookID)
       .get()
@@ -21,16 +23,16 @@ exports.webhook = functions.https.onRequest((request, response) => {
             // eslint-disable-next-line no-eval
             eval(code)
           } catch (e) {
-            response.send(e.stack)
+            res.send(e.stack)
           }
         } else {
-          response.send('No such document.')
+          res.send('No such document.')
         }
 
         return null
       })
       .catch(error => {
-        response.send(error.message)
+        res.send(error.message)
       })
   })
 })
