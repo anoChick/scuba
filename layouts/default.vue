@@ -7,10 +7,20 @@
 </template>
 <script>
 import TopNav from '~/components/TopNav.vue'
-
+import firebase from 'firebase'
 export default {
   components: {
     TopNav
+  },
+  async mounted () {
+    let user = await new Promise((resolve, reject) => {
+      firebase.auth().onAuthStateChanged((user) => resolve(user))
+    })
+
+    if (user) {
+      this.$store.dispatch("setUser", user)
+      this.$router.push('/')
+    }
   }
 }
 </script>

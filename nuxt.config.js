@@ -44,13 +44,13 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
     ['nuxt-fire', {
-      useOnly: ['firestore'],
+      useOnly: ['auth', 'firestore'],
       config: {
         development: {
           apiKey: process.env.FIRE_API_KEY,
           databaseURL: process.env.FIRE_DATABASE_URL,
           projectId: process.env.FIRE_PROJECT_ID,
-          authDomain: '',
+          authDomain: process.env.FIRE_AUTH_DOMAIN,
           storageBucket: '',
           messagingSenderId: ''
         },
@@ -58,14 +58,16 @@ module.exports = {
           apiKey: process.env.FIRE_API_KEY,
           databaseURL: process.env.FIRE_DATABASE_URL,
           projectId: process.env.FIRE_PROJECT_ID,
-          authDomain: '',
+          authDomain: process.env.FIRE_AUTH_DOMAIN,
           storageBucket: '',
           messagingSenderId: ''
         }
       }
     }]
   ],
-
+  router: {
+    middleware: 'router-auth'
+  },
   /*
   ** Build configuration
   */
