@@ -1,6 +1,8 @@
 <template lang='pug'>
 .container
   #formEditContainer(v-if="form")
+    .link-wrap(style='text-align:right;')
+      nuxt-link.link(:to="`/forms/${form.id}/form`") フォーム画面へ
     el-form(label-position='top')
       el-form-item(label="タイトル")
         el-input(v-model="form.title" size='mini')
@@ -28,24 +30,24 @@
             el-button.delete-button(plain type="danger" icon="el-icon-delete" @click="removePair('params', param.id)" size='mini')
         .add-button
           el-button(round icon="el-icon-plus" @click="addPair('params')" style="width: 80%;" size='mini') パラメータを追加
-      el-form-item(label="HTTPヘッダ")
-        .form-param(v-for="header in form.headers" :key="header.id")
-          el-col(:span="10")
-            el-input(v-model="header.key" placeholder="Key" size='mini')
-          el-col.line.center(:span="2") :
-          el-col(:span="10")
-            el-input(v-model="header.value" placeholder="Value" size='mini')
-          el-col(:span="2")
-            el-button.delete-button(plain type="danger" icon="el-icon-delete" @click="removePair('headers', header.id)" size='mini')
-        .add-button
-          el-button(round icon="el-icon-plus" @click="addPair('headers')" style="width: 80%;" size='mini') HTTPヘッダを追加
+      //- el-form-item(label="HTTPヘッダ")
+      //-   .form-param(v-for="header in form.headers" :key="header.id")
+      //-     el-col(:span="10")
+      //-       el-input(v-model="header.key" placeholder="Key" size='mini')
+      //-     el-col.line.center(:span="2") :
+      //-     el-col(:span="10")
+      //-       el-input(v-model="header.value" placeholder="Value" size='mini')
+      //-     el-col(:span="2")
+      //-       el-button.delete-button(plain type="danger" icon="el-icon-delete" @click="removePair('headers', header.id)" size='mini')
+      //-   .add-button
+      //-     el-button(round icon="el-icon-plus" @click="addPair('headers')" style="width: 80%;" size='mini') HTTPヘッダを追加
       el-form-item(label="変数")
         .form-param(v-for="variable in form.variables" :key="variable.id")
           el-col(:span="10")
-            el-input(v-model="variable.key" placeholder="ラベル" size='mini')
+            el-input(v-model="variable.label" placeholder="ラベル" size='mini')
           el-col.line.center(:span="2") :
           el-col(:span="10")
-            el-input(v-model="variable.value" placeholder="変数名" size='mini')
+            el-input(v-model="variable.name" placeholder="変数名" size='mini')
           el-col(:span="2")
             el-button.delete-button(plain type="danger" icon="el-icon-delete" @click="removePair('variables', variable.id)" size='mini')
         .add-button
@@ -112,6 +114,9 @@ export default {
 </script>
 <style lang='sass'>
 #formEditContainer
+  .link
+    color: #409EFF
+    text-decoration: none
   .center
     text-align: center
   .el-form-item
