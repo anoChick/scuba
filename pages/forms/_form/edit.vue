@@ -53,7 +53,18 @@
         .add-button
           el-button(round icon="el-icon-plus" @click="addPair('variables')" style="width: 80%;" size='mini') 変数を追加
       el-form-item(style='text-align:right;')
+        el-button(icon="el-icon-delete" @click="deleteDialogVisible = true" type='danger' style='float:left;') 削除
         el-button(@click="updateForm") 保存
+  el-dialog(
+    title="Formを削除"
+    :visible.sync="deleteDialogVisible"
+    width="30%"
+    center
+  )
+    span 本当に削除しますか？
+    span.dialog-footer(slot='footer')
+      el-button(@click="deleteDialogVisible = false") キャンセル
+      el-button(type="danger" @click="deleteForm()") 削除
 </template>
 <script>
 import { mapState } from 'vuex'
@@ -64,7 +75,6 @@ export default {
     return {
       deleteDialogVisible: false,
       loading: false,
-      result: '[未実行]',
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
     }
   },
@@ -78,7 +88,11 @@ export default {
   },
   methods: {
     updateForm() {
-      this.$store.dispatch('updateForm', this.form);
+      this.$store.dispatch('updateForm', this.form)
+    },
+    deleteForm() {
+      this.$store.dispatch('deleteForm', this.form.id)
+      this.$router.push('/forms')
     },
     addPair(type) {
       this.form[type].push(this.defaultPair(type))
@@ -100,9 +114,6 @@ export default {
           value:''
         }
       }
-    },
-    async update() {
-      this.$store.dispatch('updateForm', this.form);
     },
     async waitLoading(process) {
       this.loading = true
